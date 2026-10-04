@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: loot-and-logistics
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    root: INFO
+    com.guild.lootandlogistics: DEBUG

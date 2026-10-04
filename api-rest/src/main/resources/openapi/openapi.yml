@@ -1,0 +1,8 @@
+openapi: 3.0.3
+
+info:
+  title: Loot and Logistics API
+  description: API de encargos de un gremio de aventureros
+  version: 0.1.0
+
+paths: {}

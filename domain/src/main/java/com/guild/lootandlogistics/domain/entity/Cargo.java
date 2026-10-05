@@ -12,7 +12,7 @@ public record Cargo(String name, int quantity) {
             throw new IllegalArgumentException("El nombre de la carga es necesario");
         }
 
-        if (quantity < 0) {
+        if (quantity <= 0) {
             throw new IllegalArgumentException("La cantidad debe ser mayor que 0");
         }
     }

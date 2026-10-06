@@ -10,6 +10,16 @@ import java.util.Optional;
  */
 public interface DeliveryQuestRepository {
 
+    /**
+     * Guarda un encargo
+     * @param quest encargo a guardar
+     */
     void save(DeliveryQuest quest);
+
+    /**
+     * Busca un encargo por su id
+     * @param id identificador del encargo
+     * @return el encargo, o vacío si no existe
+     */
     Optional<DeliveryQuest> findById(QuestId id);
 }

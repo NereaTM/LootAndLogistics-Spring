@@ -9,7 +9,7 @@ import com.guild.lootandlogistics.domain.repository.DeliveryQuestRepository;
 import com.guild.lootandlogistics.domain.usecase.CreateDeliveryQuestUseCase;
 
 /**
- * Publica un nuevo encargo en el tablón: lo crea y lo guarda
+ * PUERTOS DE ENTRADA - publica un nuevo encargo
  */
 public class CreateDeliveryQuestService implements CreateDeliveryQuestUseCase {
 
@@ -19,6 +19,17 @@ public class CreateDeliveryQuestService implements CreateDeliveryQuestUseCase {
         this.repository = repository;
     }
 
+    /**
+     * Publica un nuevo encargo - por defecto AVAILABLE con id generado
+     * @param title título del encargo
+     * @param origin lugar de recogida
+     * @param destination lugar de entrega, distinto del origen
+     * @param cargo mercancía a transportar
+     * @param reward recompensa, mayor que 0
+     * @param dangerLevel nivel de peligro
+     * @return el encargo creado
+     * @throws IllegalArgumentException si algún dato no es válido
+     */
     @Override
     public DeliveryQuest create(String title,
                                 Location origin, Location destination,

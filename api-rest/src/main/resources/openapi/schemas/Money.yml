@@ -1,0 +1,16 @@
+# Recompensa: cantidad + moneda, igual que el record Money del dominio
+type: object
+required:
+  - amount
+  - currency
+
+properties:
+  amount:
+    type: integer
+    example: 15
+  currency:
+    type: string
+    enum:
+      - GOLD
+      - SILVER
+      - COPPER

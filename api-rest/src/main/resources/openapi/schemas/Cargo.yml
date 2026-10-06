@@ -1,0 +1,13 @@
+# Mercancía a transportar
+type: object
+required:
+  - name
+  - quantity
+
+properties:
+  name:
+    type: string
+    example: Baba de caracol
+  quantity:
+    type: integer
+    example: 5

@@ -1,0 +1,23 @@
+post:
+  tags:
+    - Quests
+
+  operationId: createDeliveryQuest
+  summary: Crea un encargo nuevo en el tablón del gremio
+
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/CreateDeliveryQuestRequest.yml'
+
+  responses:
+    '201':
+      description: Encargo creado
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/DeliveryQuestResponse.yml'
+    '400':
+      description: Datos del encargo no válidos

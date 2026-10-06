@@ -12,19 +12,15 @@ required:
 properties:
   title:
     type: string
-
+    example: Entrega de baba de caracol
   origin:
     $ref: './Location.yml'
-
   destination:
     $ref: './Location.yml'
-
   cargo:
     $ref: './Cargo.yml'
-
   reward:
     $ref: './Money.yml'
-
   dangerLevel:
     type: string
     enum:

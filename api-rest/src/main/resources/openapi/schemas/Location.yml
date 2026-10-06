@@ -7,9 +7,10 @@
   properties:
     name:
       type: string
-
+      example: El Gremio de Aventureros
     street:
       type: string
-
+      example: las Minas
     region:
       type: string
+      example: Stardew Valley

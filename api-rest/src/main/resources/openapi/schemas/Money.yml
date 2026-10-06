@@ -7,7 +7,7 @@ required:
 properties:
   amount:
     type: integer
-
+    example: 15
   currency:
     type: string
     enum:

@@ -1,0 +1,48 @@
+# Lo que devuelve la API: el encargo completo
+type: object
+required:
+  - id
+  - title
+  - origin
+  - destination
+  - cargo
+  - reward
+  - dangerLevel
+  - status
+
+properties:
+  id:
+    type: string
+    format: uuid
+
+  title:
+    type: string
+
+  origin:
+    $ref: './Location.yml'
+
+  destination:
+    $ref: './Location.yml'
+
+  cargo:
+    $ref: './Cargo.yml'
+
+  reward:
+    $ref: './Money.yml'
+
+  dangerLevel:
+    type: string
+    enum:
+      - LOW
+      - MEDIUM
+      - HIGH
+      - EXTREME
+
+  status:
+    type: string
+    enum:
+      - AVAILABLE
+      - ACCEPTED
+      - IN_TRANSIT
+      - DELIVERED
+      - CANCELLED

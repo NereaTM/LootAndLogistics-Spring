@@ -1,0 +1,15 @@
+  # Lugar del reino
+  type: object
+  required:
+    - street
+    - region
+
+  properties:
+    name:
+      type: string
+
+    street:
+      type: string
+
+    region:
+      type: string

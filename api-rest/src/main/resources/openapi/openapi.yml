@@ -5,4 +5,26 @@ info:
   description: API de encargos de un gremio de aventureros
   version: 0.1.0
 
-paths: {}
+paths:
+  # POST de crear
+  /quests:
+    $ref: './paths/quests.yml'
+  # GET de consultar
+  /quests/{id}:
+    $ref: './paths/quest-by-id.yml'
+
+components:
+  schemas:
+    # Lo que manda el cliente al crear (sin id ni status: los decide el dominio)
+    CreateDeliveryQuestRequest:
+      $ref: './schemas/CreateDeliveryQuestRequest.yml'
+    # Lo que devuelve la API: el encargo completo
+    DeliveryQuestResponse:
+      $ref: './schemas/DeliveryQuestResponse.yml'
+    # Piezas que usan los dos anteriores
+    Location:
+      $ref: './schemas/Location.yml'
+    Cargo:
+      $ref: './schemas/Cargo.yml'
+    Money:
+      $ref: './schemas/Money.yml'

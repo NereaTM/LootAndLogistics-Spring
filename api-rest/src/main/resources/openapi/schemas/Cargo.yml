@@ -1,0 +1,12 @@
+# Mercancía a transportar
+type: object
+required:
+  - name
+  - quantity
+
+properties:
+  name:
+    type: string
+
+  quantity:
+    type: integer

@@ -1,0 +1,34 @@
+# Lo que manda el cliente al crear
+type: object
+
+required:
+  - title
+  - origin
+  - destination
+  - cargo
+  - reward
+  - dangerLevel
+
+properties:
+  title:
+    type: string
+
+  origin:
+    $ref: './Location.yml'
+
+  destination:
+    $ref: './Location.yml'
+
+  cargo:
+    $ref: './Cargo.yml'
+
+  reward:
+    $ref: './Money.yml'
+
+  dangerLevel:
+    type: string
+    enum:
+      - LOW
+      - MEDIUM
+      - HIGH
+      - EXTREME

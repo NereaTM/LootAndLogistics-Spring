@@ -1,0 +1,35 @@
+package com.guild.lootandlogistics.config;
+
+import com.guild.lootandlogistics.application.service.CreateDeliveryQuestService;
+import com.guild.lootandlogistics.application.service.GetDeliveryQuestService;
+import com.guild.lootandlogistics.domain.repository.DeliveryQuestRepository;
+import com.guild.lootandlogistics.domain.usecase.CreateDeliveryQuestUseCase;
+import com.guild.lootandlogistics.domain.usecase.GetDeliveryQuestUseCase;
+import com.guild.lootandlogistics.infrastructure.persistence.InMemoryDeliveryQuestRepository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * Crea los beans de los encargos que no llevan anotaciones de Spring.
+ */
+@Configuration
+public class DeliveryQuestConfig {
+
+    // Repositorio de encargos
+    @Bean
+    public DeliveryQuestRepository deliveryQuestRepository() {
+        return new InMemoryDeliveryQuestRepository();
+    }
+
+    // Caso de uso - crear encargo
+    @Bean
+    public CreateDeliveryQuestUseCase createDeliveryQuestUseCase(DeliveryQuestRepository repository) {
+        return new CreateDeliveryQuestService(repository);
+    }
+
+    // Caso de uso - consultar encargo
+    @Bean
+    public GetDeliveryQuestUseCase getDeliveryQuestUseCase(DeliveryQuestRepository repository) {
+        return new GetDeliveryQuestService(repository);
+    }
+}

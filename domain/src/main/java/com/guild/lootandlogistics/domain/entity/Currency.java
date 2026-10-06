@@ -6,5 +6,5 @@ package com.guild.lootandlogistics.domain.entity;
 public enum Currency {
     GOLD,
     SILVER,
-    COPER
+    COPPER
 }

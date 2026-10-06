@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("GetDeliveryQuestService")
+@DisplayName("Caso de uso: consultar encargo")
 class GetDeliveryQuestServiceTest {
 
     // repositorio falso y servicio nuevos en cada test

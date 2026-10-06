@@ -2,6 +2,7 @@ package com.guild.lootandlogistics.apirest.controller;
 
 import com.guild.lootandlogistics.apirest.mapper.DeliveryQuestMapperImpl;
 import com.guild.lootandlogistics.domain.entity.*;
+import com.guild.lootandlogistics.domain.exception.QuestNotFoundException;
 import com.guild.lootandlogistics.domain.usecase.CreateDeliveryQuestUseCase;
 import com.guild.lootandlogistics.domain.usecase.GetDeliveryQuestUseCase;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -83,7 +85,7 @@ class DeliveryQuestControllerTest {
     @Test
     @DisplayName("Responde 400 con el mensaje si el dominio rechaza el encargo")
     void shouldReturn400WhenDomainRejectsQuest() throws Exception {
-        // Simulamos que el dominio lanza su excepción
+        // Se simula que el dominio lanza su excepción
         when(createDeliveryQuestUseCase.create(any(), any(), any(), any(), any(), any()))
                 .thenThrow(new IllegalArgumentException("El origen y el destino no pueden ser el mismo"));
 
@@ -92,5 +94,30 @@ class DeliveryQuestControllerTest {
                         .content(VALID_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.detail").value("El origen y el destino no pueden ser el mismo"));
+    }
+
+    // GET /quests/{id} - el encargo existe
+    @Test
+    @DisplayName("Devuelve el encargo con 200 si existe")
+    void shouldReturnQuestWhenExists() throws Exception {
+        when(getDeliveryQuestUseCase.get(any())).thenReturn(quest);
+
+        mockMvc.perform(get("/quests/{id}", quest.getId().value()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(quest.getId().value().toString()))
+                .andExpect(jsonPath("$.title").value("Entrega de baba de caracol"))
+                .andExpect(jsonPath("$.status").value("AVAILABLE"));
+    }
+
+    // GET /quests/{id} - el encargo no existe
+    @Test
+    @DisplayName("Responde 404 si el encargo no existe")
+    void shouldReturn404WhenQuestDoesNotExist() throws Exception {
+        when(getDeliveryQuestUseCase.get(any())).thenThrow(new QuestNotFoundException(quest.getId()));
+
+        mockMvc.perform(get("/quests/{id}", quest.getId().value()))
+                .andExpect(status().isNotFound())
+                // El texto exacto ya se prueba en el dominio, aquí basta con que llegue
+                .andExpect(jsonPath("$.detail").exists());
     }
 }

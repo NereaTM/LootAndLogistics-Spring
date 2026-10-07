@@ -10,4 +10,8 @@ down:
 compile:
 	mvnw.cmd clean compile
 
-.PHONY: up down compile
+# Todos los tests
+verify:
+  mvnw.cmd verify
+
+.PHONY: up down compile verify

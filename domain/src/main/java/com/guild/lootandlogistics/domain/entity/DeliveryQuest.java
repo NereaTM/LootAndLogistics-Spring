@@ -29,6 +29,9 @@ public class DeliveryQuest {
         this.status = status;
     }
 
+    /**
+     * Crea el OBJETO de NUEVAS (Valída las reglas)
+     */
     public static DeliveryQuest create(
             String title,
             Location origin, Location destination,
@@ -65,6 +68,18 @@ public class DeliveryQuest {
 
         return new DeliveryQuest(QuestId.generate(), title, origin, destination,
                 cargo, reward, dangerLevel, QuestStatus.AVAILABLE);
+    }
+
+    /**
+     * Llama a un OBJETO que ya EXISTIA
+     */
+    public static DeliveryQuest restore(
+            QuestId id, String title,
+            Location origin, Location destination,
+            Cargo cargo, Money reward,
+            DangerLevel dangerLevel, QuestStatus status) {
+        return new DeliveryQuest(id, title, origin, destination,
+                cargo, reward, dangerLevel, status);
     }
 
     public QuestId getId() {

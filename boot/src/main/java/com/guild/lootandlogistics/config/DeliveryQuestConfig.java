@@ -5,7 +5,9 @@ import com.guild.lootandlogistics.application.service.GetDeliveryQuestService;
 import com.guild.lootandlogistics.domain.repository.DeliveryQuestRepository;
 import com.guild.lootandlogistics.domain.usecase.CreateDeliveryQuestUseCase;
 import com.guild.lootandlogistics.domain.usecase.GetDeliveryQuestUseCase;
-import com.guild.lootandlogistics.infrastructure.persistence.InMemoryDeliveryQuestRepository;
+import com.guild.lootandlogistics.infrastructure.persistence.DeliveryQuestEntityMapper;
+import com.guild.lootandlogistics.infrastructure.persistence.DeliveryQuestJpaRepository;
+import com.guild.lootandlogistics.infrastructure.persistence.PostgresDeliveryQuestRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,8 +19,9 @@ public class DeliveryQuestConfig {
 
     // Repositorio de encargos
     @Bean
-    public DeliveryQuestRepository deliveryQuestRepository() {
-        return new InMemoryDeliveryQuestRepository();
+    public DeliveryQuestRepository deliveryQuestRepository(DeliveryQuestJpaRepository jpaRepository,
+                                                           DeliveryQuestEntityMapper mapper) {
+        return new PostgresDeliveryQuestRepository(jpaRepository, mapper);
     }
 
     // Caso de uso - crear encargo

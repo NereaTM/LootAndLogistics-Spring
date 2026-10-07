@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("DeliveryQuest - creación")
+@DisplayName("DeliveryQuest")
 public class DeliveryQuestTest {
 
     private final String title = "Entrega de baba de caracol";
@@ -115,5 +115,23 @@ public class DeliveryQuestTest {
         assertThatThrownBy(() -> DeliveryQuest.create(title, origin, destination, cargo, reward, null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("El peligro del encargo es obligatorio");
+    }
+
+    @Test
+    @DisplayName("Recuperar un encargo")
+    void restoreKeepsIdAndStatus() {
+        QuestId id = QuestId.generate();
+
+        DeliveryQuest quest = DeliveryQuest.restore(
+                id, "Llevar pociones",
+                new Location(null, "Calle Mayor", "Valle Norte"),
+                new Location("Torre del Mago", "Camino Alto", "Montes Grises"),
+                new Cargo("Pociones", 3),
+                new Money(50, Currency.GOLD),
+                DangerLevel.LOW, QuestStatus.IN_TRANSIT);
+
+        // Mismo id y mismo status de antes
+        assertThat(quest.getId()).isEqualTo(id);
+        assertThat(quest.getStatus()).isEqualTo(QuestStatus.IN_TRANSIT);
     }
 }

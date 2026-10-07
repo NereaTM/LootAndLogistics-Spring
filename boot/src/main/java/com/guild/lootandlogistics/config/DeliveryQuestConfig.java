@@ -7,7 +7,6 @@ import com.guild.lootandlogistics.domain.usecase.CreateDeliveryQuestUseCase;
 import com.guild.lootandlogistics.domain.usecase.GetDeliveryQuestUseCase;
 import com.guild.lootandlogistics.infrastructure.persistence.DeliveryQuestEntityMapper;
 import com.guild.lootandlogistics.infrastructure.persistence.DeliveryQuestJpaRepository;
-import com.guild.lootandlogistics.infrastructure.persistence.InMemoryDeliveryQuestRepository;
 import com.guild.lootandlogistics.infrastructure.persistence.PostgresDeliveryQuestRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

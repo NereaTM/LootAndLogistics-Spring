@@ -5,6 +5,9 @@ info:
   description: API de encargos de un gremio de aventureros
   version: 0.1.0
 
+security:
+  - ApiKeyAuth: [ ]
+
 paths:
   # POST de crear
   /quests:
@@ -14,6 +17,13 @@ paths:
     $ref: './paths/quest-by-id.yml'
 
 components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Clave de acceso a la API
+
   schemas:
     # Lo que manda el cliente al crear (sin id ni status: los decide el dominio)
     CreateDeliveryQuestRequest:

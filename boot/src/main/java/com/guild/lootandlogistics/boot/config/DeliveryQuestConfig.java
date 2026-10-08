@@ -1,4 +1,4 @@
-package com.guild.lootandlogistics.config;
+package com.guild.lootandlogistics.boot.config;
 
 import com.guild.lootandlogistics.application.service.CreateDeliveryQuestService;
 import com.guild.lootandlogistics.application.service.GetDeliveryQuestService;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Crea los beans de los encargos que no llevan anotaciones de Spring.
+ * Crea los beans de los encargos que no llevan anotaciones de Spring
  */
 @Configuration
 public class DeliveryQuestConfig {

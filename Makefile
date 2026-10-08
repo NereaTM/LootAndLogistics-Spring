@@ -12,6 +12,6 @@ compile:
 
 # Todos los tests
 verify:
-  mvnw.cmd verify
+	mvnw.cmd verify
 
 .PHONY: up down compile verify

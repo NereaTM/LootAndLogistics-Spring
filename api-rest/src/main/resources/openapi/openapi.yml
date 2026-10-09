@@ -9,7 +9,7 @@ security:
   - ApiKeyAuth: [ ]
 
 paths:
-  # POST de crear
+  # CRUD quests
   /quests:
     $ref: './paths/quests.yml'
   # GET de consultar

@@ -46,10 +46,11 @@ Proyecto formativo para aprender arquitectura hexagonal con Spring Boot.
 
 ## Endpoints
 
-| Método | Ruta | Acción |
-|---|---|---|
-| POST | `/quests` | Crear encargo |
+| Método | Ruta | Acción            |
+|---|---|-------------------|
+| POST | `/quests` | Crear encargo     |
 | GET | `/quests/{id}` | Consultar encargo |
+| GET | `/quests` | Listar todo       |
 
 ## Tests
     ./mvnw clean verify  #Test

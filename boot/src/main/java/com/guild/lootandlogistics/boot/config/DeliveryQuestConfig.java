@@ -1,9 +1,11 @@
 package com.guild.lootandlogistics.boot.config;
 
 import com.guild.lootandlogistics.application.service.CreateDeliveryQuestService;
+import com.guild.lootandlogistics.application.service.FindAllDeliveryQuestsService;
 import com.guild.lootandlogistics.application.service.GetDeliveryQuestService;
 import com.guild.lootandlogistics.domain.repository.DeliveryQuestRepository;
 import com.guild.lootandlogistics.domain.usecase.CreateDeliveryQuestUseCase;
+import com.guild.lootandlogistics.domain.usecase.FindAllDeliveryQuestsUseCase;
 import com.guild.lootandlogistics.domain.usecase.GetDeliveryQuestUseCase;
 import com.guild.lootandlogistics.infrastructure.persistence.DeliveryQuestEntityMapper;
 import com.guild.lootandlogistics.infrastructure.persistence.DeliveryQuestJpaRepository;
@@ -34,5 +36,11 @@ public class DeliveryQuestConfig {
     @Bean
     public GetDeliveryQuestUseCase getDeliveryQuestUseCase(DeliveryQuestRepository repository) {
         return new GetDeliveryQuestService(repository);
+    }
+
+    // Caso de uso - listar
+    @Bean
+    FindAllDeliveryQuestsUseCase findAllDeliveryQuestsUseCase(DeliveryQuestRepository repository) {
+        return new FindAllDeliveryQuestsService(repository);
     }
 }

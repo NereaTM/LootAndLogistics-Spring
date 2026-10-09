@@ -4,6 +4,7 @@ import com.guild.lootandlogistics.apirest.mapper.DeliveryQuestMapperImpl;
 import com.guild.lootandlogistics.domain.entity.*;
 import com.guild.lootandlogistics.domain.exception.QuestNotFoundException;
 import com.guild.lootandlogistics.domain.usecase.CreateDeliveryQuestUseCase;
+import com.guild.lootandlogistics.domain.usecase.FindAllDeliveryQuestsUseCase;
 import com.guild.lootandlogistics.domain.usecase.GetDeliveryQuestUseCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -34,6 +37,9 @@ class DeliveryQuestControllerTest {
 
     @MockitoBean
     private GetDeliveryQuestUseCase getDeliveryQuestUseCase;
+
+    @MockitoBean
+    private FindAllDeliveryQuestsUseCase findAllDeliveryQuestsUseCase;
 
     private final DeliveryQuest quest = DeliveryQuest.create(
             "Entrega de baba de caracol",
@@ -119,5 +125,29 @@ class DeliveryQuestControllerTest {
                 .andExpect(status().isNotFound())
                 // El texto exacto ya se prueba en el dominio, aquí basta con que llegue
                 .andExpect(jsonPath("$.detail").exists());
+    }
+
+    // GET /quests - con encargos
+    @Test
+    @DisplayName("Lista los encargos y responde 200")
+    void shouldReturnAllQuestsWith200() throws Exception {
+        when(findAllDeliveryQuestsUseCase.findAll()).thenReturn(List.of(quest));
+
+        mockMvc.perform(get("/quests"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value(quest.getId().value().toString()))
+                .andExpect(jsonPath("$[0].title").value("Entrega de baba de caracol"));
+    }
+
+    // GET /quests - tablón vacío
+    @Test
+    @DisplayName("Sin encargos responde 200 con lista vacía")
+    void shouldReturnEmptyListWith200() throws Exception {
+        when(findAllDeliveryQuestsUseCase.findAll()).thenReturn(List.of());
+
+        mockMvc.perform(get("/quests"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isEmpty());
     }
 }

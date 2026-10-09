@@ -1,3 +1,20 @@
+get:
+  tags:
+    - Quests
+
+  operationId: findAllDeliveryQuests
+  summary: Lista todos los encargos del tablón del gremio
+
+  responses:
+    '200':
+      description: Listado de encargos (vacío si no hay ninguno)
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../schemas/DeliveryQuestResponse.yml'
+
 post:
   tags:
     - Quests

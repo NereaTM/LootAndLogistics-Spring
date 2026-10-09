@@ -3,6 +3,7 @@ package com.guild.lootandlogistics.domain.repository;
 import com.guild.lootandlogistics.domain.entity.DeliveryQuest;
 import com.guild.lootandlogistics.domain.entity.QuestId;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -22,4 +23,10 @@ public interface DeliveryQuestRepository {
      * @return el encargo, o vacío si no existe
      */
     Optional<DeliveryQuest> findById(QuestId id);
+
+    /**
+     * Devuelve el listado de los encargos
+     * @return lista de encargos
+     */
+    List<DeliveryQuest> findAll();
 }

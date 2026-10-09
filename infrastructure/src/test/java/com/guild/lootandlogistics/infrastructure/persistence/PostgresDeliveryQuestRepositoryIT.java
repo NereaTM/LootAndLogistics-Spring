@@ -19,6 +19,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -71,6 +72,34 @@ class PostgresDeliveryQuestRepositoryIT {
     @DisplayName("Si el encargo no existe devuelve vacío")
     void unknownIdReturnsEmpty() {
         Optional<DeliveryQuest> found = repository.findById(QuestId.generate());
+
+        assertThat(found).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Devuelve todos los encargos guardados")
+    void findAllReturnsAllSavedQuests() {
+        Location origin = new Location(null, "Calle Mayor", "Valle Norte");
+        Location destination = new Location("Torre del Mago", "Camino Alto", "Montes Grises");
+        Cargo cargo = new Cargo("Pociones", 3);
+        Money reward = new Money(50, Currency.GOLD);
+
+        repository.save(DeliveryQuest.create("Llevar pociones", origin, destination, cargo, reward, DangerLevel.LOW));
+        repository.save(DeliveryQuest.create("Escoltar al bardo", origin, destination, cargo, reward, DangerLevel.LOW));
+        entityManager.flush();
+        entityManager.clear();
+
+        List<DeliveryQuest> found = repository.findAll();
+
+        assertThat(found)
+                .extracting(quest -> quest.getTitle())
+                .containsExactlyInAnyOrder("Llevar pociones", "Escoltar al bardo");
+    }
+
+    @Test
+    @DisplayName("Si no hay encargos devuelve una lista vacía")
+    void findAllReturnsEmptyListWhenNoQuests() {
+        List<DeliveryQuest> found = repository.findAll();
 
         assertThat(found).isEmpty();
     }

@@ -4,6 +4,7 @@ import com.guild.lootandlogistics.domain.entity.DeliveryQuest;
 import com.guild.lootandlogistics.domain.entity.QuestId;
 import com.guild.lootandlogistics.domain.repository.DeliveryQuestRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -31,5 +32,13 @@ public class PostgresDeliveryQuestRepository implements DeliveryQuestRepository 
     public Optional<DeliveryQuest> findById(QuestId id) {
         return jpaRepository.findById(id.value())
                 .map(entity -> mapper.toDomain(entity));
+    }
+
+    @Override
+    public List<DeliveryQuest> findAll() {
+        return jpaRepository.findAll()
+                .stream()
+                .map(entity -> mapper.toDomain(entity))
+                .toList();
     }
 }

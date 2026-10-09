@@ -13,6 +13,7 @@ import com.guild.lootandlogistics.domain.entity.Money;
 import com.guild.lootandlogistics.domain.entity.QuestId;
 import org.mapstruct.Mapper;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -35,6 +36,8 @@ public interface DeliveryQuestMapper {
     // Salida: dominio a DTO
 
     DeliveryQuestResponseDTO toResponse(DeliveryQuest quest);
+
+    List<DeliveryQuestResponseDTO> toResponse(List<DeliveryQuest> quests);
 
     // MapStruct no sabe sacar el UUID de QuestId por su cuenta
     default UUID map(QuestId id) {

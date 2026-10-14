@@ -1,4 +1,4 @@
-package com.guild.lootandlogistics.application.service; // capa application: orquesta, no tiene reglas del juego
+package com.guild.lootandlogistics.application.usecase; // capa application: orquesta, no tiene reglas del juego
 
 import com.guild.lootandlogistics.domain.entity.Cargo;
 import com.guild.lootandlogistics.domain.entity.DangerLevel;
@@ -11,11 +11,11 @@ import com.guild.lootandlogistics.domain.usecase.CreateDeliveryQuestUseCase;
 /**
  * PUERTOS DE ENTRADA - publica un nuevo encargo
  */
-public class CreateDeliveryQuestService implements CreateDeliveryQuestUseCase {
+public class CreateDeliveryQuestUseCaseImpl implements CreateDeliveryQuestUseCase {
 
     private final DeliveryQuestRepository repository;
 
-    public CreateDeliveryQuestService(DeliveryQuestRepository repository) {
+    public CreateDeliveryQuestUseCaseImpl(DeliveryQuestRepository repository) {
         this.repository = repository;
     }
 

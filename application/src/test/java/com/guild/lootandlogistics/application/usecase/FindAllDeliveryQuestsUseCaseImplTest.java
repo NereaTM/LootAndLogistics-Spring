@@ -1,4 +1,4 @@
-package com.guild.lootandlogistics.application.service;
+package com.guild.lootandlogistics.application.usecase;
 
 import com.guild.lootandlogistics.domain.entity.*;
 import org.junit.jupiter.api.DisplayName;
@@ -9,11 +9,11 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Caso de uso: listar todos los encargos")
-class FindAllDeliveryQuestsServiceTest {
+class FindAllDeliveryQuestsUseCaseImplTest {
 
-    // repositorio falso y servicio nuevos en cada test
+    // repositorio falso y caso de uso nuevos en cada test
     private final FakeDeliveryQuestRepository repository = new FakeDeliveryQuestRepository();
-    private final FindAllDeliveryQuestsService service = new FindAllDeliveryQuestsService(repository);
+    private final FindAllDeliveryQuestsUseCaseImpl useCase = new FindAllDeliveryQuestsUseCaseImpl(repository);
 
     // Las piezas para enviarlo al respositorio
     private final Location origin = new Location("El Gremio de Aventureros", "las Minas", "Stardew Valley");
@@ -28,7 +28,7 @@ class FindAllDeliveryQuestsServiceTest {
         repository.save(DeliveryQuest.create("Entrega de baba de caracol", origin, destination, cargo, reward, dangerLevel));
         repository.save(DeliveryQuest.create("Escolta de huevo de dragón", origin, destination, cargo, reward, dangerLevel));
 
-        List<DeliveryQuest> result = service.findAll();
+        List<DeliveryQuest> result = useCase.findAll();
 
         assertThat(result)
                 .extracting(quest -> quest.getTitle())
@@ -38,7 +38,7 @@ class FindAllDeliveryQuestsServiceTest {
     @Test
     @DisplayName("Con el tablón vacío, devuelve una lista vacía")
     void shouldReturnEmptyListWhenNoQuests() {
-        List<DeliveryQuest> result = service.findAll();
+        List<DeliveryQuest> result = useCase.findAll();
 
         assertThat(result).isEmpty();
     }

@@ -1,4 +1,4 @@
-package com.guild.lootandlogistics.application.service;
+package com.guild.lootandlogistics.application.usecase;
 
 import com.guild.lootandlogistics.domain.entity.*;
 import com.guild.lootandlogistics.domain.exception.QuestNotFoundException;
@@ -9,11 +9,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("Caso de uso: consultar encargo")
-class GetDeliveryQuestServiceTest {
+class GetDeliveryQuestUseCaseImplTest {
 
-    // repositorio falso y servicio nuevos en cada test
+    // repositorio falso y caso de uso nuevos en cada test
     private final FakeDeliveryQuestRepository repository = new FakeDeliveryQuestRepository();
-    private final GetDeliveryQuestService service = new GetDeliveryQuestService(repository);
+    private final GetDeliveryQuestUseCaseImpl useCase = new GetDeliveryQuestUseCaseImpl(repository);
 
     // Las piezas para enviarlo al respositorio
     private final String title = "Entrega de baba de caracol";
@@ -31,7 +31,7 @@ class GetDeliveryQuestServiceTest {
     void shouldReturnQuestWhenExists() {
         repository.save(quest); // preparamos: el encargo ya está en el tablón
 
-        DeliveryQuest found = service.get(quest.getId());
+        DeliveryQuest found = useCase.get(quest.getId());
 
         assertThat(found).isEqualTo(quest);
     }
@@ -41,7 +41,7 @@ class GetDeliveryQuestServiceTest {
     void shouldThrowWhenQuestNotFound() {
         QuestId unknownId = QuestId.generate(); // id que nunca se ha guardado
 
-        assertThatThrownBy(() -> service.get(unknownId))
+        assertThatThrownBy(() -> useCase.get(unknownId))
                 .isInstanceOf(QuestNotFoundException.class)
                 .hasMessage("No existe ningún encargo con el id " + unknownId.value());
     }

@@ -3,7 +3,7 @@ package com.guild.lootandlogistics.apirest.controller;
 import com.guild.lootandlogistics.apirest.api.QuestsApi;
 import com.guild.lootandlogistics.apirest.dto.CreateDeliveryQuestRequestDTO;
 import com.guild.lootandlogistics.apirest.dto.DeliveryQuestResponseDTO;
-import com.guild.lootandlogistics.apirest.mapper.DeliveryQuestMapper;
+import com.guild.lootandlogistics.apirest.mapper.DeliveryQuestDtoMapper;
 import com.guild.lootandlogistics.domain.entity.DeliveryQuest;
 import com.guild.lootandlogistics.domain.entity.QuestId;
 import com.guild.lootandlogistics.domain.usecase.CreateDeliveryQuestUseCase;
@@ -21,18 +21,18 @@ import java.util.UUID;
  * Implementa la interfaz generada desde el contrato OpenAPI
  */
 @RestController
-public class DeliveryQuestController implements QuestsApi {
+public class QuestsApiController implements QuestsApi {
 
-    // Solo usa los puertos del dominio, no los servicios
+    // Los puertos de entrada - interfaces
     private final CreateDeliveryQuestUseCase createDeliveryQuestUseCase;
     private final GetDeliveryQuestUseCase getDeliveryQuestUseCase;
-    private final DeliveryQuestMapper mapper;
+    private final DeliveryQuestDtoMapper mapper;
     private final FindAllDeliveryQuestsUseCase findAllDeliveryQuestsUseCase;
 
-    public DeliveryQuestController(CreateDeliveryQuestUseCase createDeliveryQuestUseCase,
-                                   GetDeliveryQuestUseCase getDeliveryQuestUseCase,
-                                   FindAllDeliveryQuestsUseCase findAllDeliveryQuestsUseCase,
-                                   DeliveryQuestMapper mapper) {
+    public QuestsApiController(CreateDeliveryQuestUseCase createDeliveryQuestUseCase,
+                               GetDeliveryQuestUseCase getDeliveryQuestUseCase,
+                               FindAllDeliveryQuestsUseCase findAllDeliveryQuestsUseCase,
+                               DeliveryQuestDtoMapper mapper) {
         this.createDeliveryQuestUseCase = createDeliveryQuestUseCase;
         this.getDeliveryQuestUseCase = getDeliveryQuestUseCase;
         this.findAllDeliveryQuestsUseCase = findAllDeliveryQuestsUseCase;

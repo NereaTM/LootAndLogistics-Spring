@@ -1,4 +1,4 @@
-package com.guild.lootandlogistics.application.service;
+package com.guild.lootandlogistics.application.usecase;
 
 import com.guild.lootandlogistics.domain.entity.DeliveryQuest;
 import com.guild.lootandlogistics.domain.entity.QuestId;
@@ -9,11 +9,11 @@ import com.guild.lootandlogistics.domain.usecase.GetDeliveryQuestUseCase;
 /**
  * Consulta un encargo del tablón por su id
  */
-public class GetDeliveryQuestService implements GetDeliveryQuestUseCase {
+public class GetDeliveryQuestUseCaseImpl implements GetDeliveryQuestUseCase {
 
     private final DeliveryQuestRepository repository;
 
-    public GetDeliveryQuestService(DeliveryQuestRepository repository) {
+    public GetDeliveryQuestUseCaseImpl(DeliveryQuestRepository repository) {
         this.repository = repository;
     }
 

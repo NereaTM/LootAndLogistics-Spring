@@ -1,6 +1,6 @@
 package com.guild.lootandlogistics.apirest.controller;
 
-import com.guild.lootandlogistics.apirest.mapper.DeliveryQuestMapperImpl;
+import com.guild.lootandlogistics.apirest.mapper.DeliveryQuestDtoMapperImpl;
 import com.guild.lootandlogistics.domain.entity.*;
 import com.guild.lootandlogistics.domain.exception.QuestNotFoundException;
 import com.guild.lootandlogistics.domain.usecase.CreateDeliveryQuestUseCase;
@@ -24,10 +24,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(DeliveryQuestController.class)
-@Import(DeliveryQuestMapperImpl.class)
+@WebMvcTest(QuestsApiController.class)
+@Import(DeliveryQuestDtoMapperImpl.class)
 @DisplayName("Controller: encargos")
-class DeliveryQuestControllerTest {
+class QuestsApiControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

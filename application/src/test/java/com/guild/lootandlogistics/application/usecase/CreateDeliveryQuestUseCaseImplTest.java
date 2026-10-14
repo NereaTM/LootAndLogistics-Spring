@@ -1,4 +1,4 @@
-package com.guild.lootandlogistics.application.service;
+package com.guild.lootandlogistics.application.usecase;
 
 import com.guild.lootandlogistics.domain.entity.*;
 
@@ -10,11 +10,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("Caso de uso: crear encargo")
-public class CreateDeliveryQuestServiceTest {
+public class CreateDeliveryQuestUseCaseImplTest {
 
-    // Cada Test crea su propio repositorio y servicio entonces no se cruzan
+    // Cada Test crea su propio repositorio y caso de uso entonces no se cruzan
     private final FakeDeliveryQuestRepository repository = new FakeDeliveryQuestRepository();
-    private final CreateDeliveryQuestService service = new CreateDeliveryQuestService(repository);
+    private final CreateDeliveryQuestUseCaseImpl useCase = new CreateDeliveryQuestUseCaseImpl(repository);
 
     // Datos compartidos
     private final String title = "Entrega de baba de caracol";
@@ -27,7 +27,7 @@ public class CreateDeliveryQuestServiceTest {
     @Test
     @DisplayName("Crea y devuelve el encargo con sus datos")
     void shouldCreateAndReturnQuest (){
-        DeliveryQuest quest = service.create(title, origin, destination, cargo, reward, dangerLevel);
+        DeliveryQuest quest = useCase.create(title, origin, destination, cargo, reward, dangerLevel);
 
         assertThat(quest.getId()).isNotNull();
         assertThat(quest.getTitle()).isEqualTo(title);
@@ -42,7 +42,7 @@ public class CreateDeliveryQuestServiceTest {
     @Test
     @DisplayName("Guarda el encargo en el repositorio")
     void shouldSaveQuestInRepository() {
-        DeliveryQuest quest = service.create(title, origin, destination, cargo, reward, dangerLevel);
+        DeliveryQuest quest = useCase.create(title, origin, destination, cargo, reward, dangerLevel);
 
         assertThat(repository.findById(quest.getId())).contains(quest);
     }
@@ -50,7 +50,7 @@ public class CreateDeliveryQuestServiceTest {
     @Test
     @DisplayName("No guarda nada si los datos no son válidos")
     void shouldNotSaveInvalidQuest() {
-        assertThatThrownBy(() -> service.create(null, origin, destination, cargo, reward, dangerLevel))
+        assertThatThrownBy(() -> useCase.create(null, origin, destination, cargo, reward, dangerLevel))
                 .isInstanceOf(IllegalArgumentException.class);
 
         assertThat(repository.quests).isEmpty();

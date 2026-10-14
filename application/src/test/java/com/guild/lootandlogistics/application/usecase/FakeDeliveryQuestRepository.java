@@ -1,4 +1,4 @@
-package com.guild.lootandlogistics.application.service;
+package com.guild.lootandlogistics.application.usecase;
 
 import com.guild.lootandlogistics.domain.entity.DeliveryQuest;
 import com.guild.lootandlogistics.domain.entity.QuestId;

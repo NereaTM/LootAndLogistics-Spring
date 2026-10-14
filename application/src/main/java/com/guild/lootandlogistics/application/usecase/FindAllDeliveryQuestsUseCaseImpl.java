@@ -1,4 +1,4 @@
-package com.guild.lootandlogistics.application.service;
+package com.guild.lootandlogistics.application.usecase;
 
 import com.guild.lootandlogistics.domain.entity.DeliveryQuest;
 import com.guild.lootandlogistics.domain.repository.DeliveryQuestRepository;
@@ -9,11 +9,11 @@ import java.util.List;
 /**
  * Implementa el caso de uso para consultar el listado
  */
-public class FindAllDeliveryQuestsService implements FindAllDeliveryQuestsUseCase {
+public class FindAllDeliveryQuestsUseCaseImpl implements FindAllDeliveryQuestsUseCase {
 
     private final DeliveryQuestRepository repository;
 
-    public FindAllDeliveryQuestsService(DeliveryQuestRepository repository) {
+    public FindAllDeliveryQuestsUseCaseImpl(DeliveryQuestRepository repository) {
         this.repository = repository;
     }
 

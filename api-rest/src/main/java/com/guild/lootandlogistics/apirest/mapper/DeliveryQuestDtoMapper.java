@@ -20,8 +20,8 @@ import java.util.UUID;
  * Convierte entre los DTOs de la API y el dominio
  * La implementación la genera MapStruct al compilar
  */
-@Mapper(componentModel = "spring")
-public interface DeliveryQuestMapper {
+@Mapper
+public interface DeliveryQuestDtoMapper {
 
     // Entrada: DTO a dominio (piezas que pide CreateDeliveryQuestUseCase)
 

@@ -4,8 +4,11 @@ import com.guild.lootandlogistics.apirest.api.QuestsApi;
 import com.guild.lootandlogistics.apirest.dto.CreateDeliveryQuestRequestDTO;
 import com.guild.lootandlogistics.apirest.dto.DeliveryQuestResponseDTO;
 import com.guild.lootandlogistics.apirest.mapper.DeliveryQuestDtoMapper;
+import com.guild.lootandlogistics.domain.entity.Currency;
 import com.guild.lootandlogistics.domain.entity.DeliveryQuest;
 import com.guild.lootandlogistics.domain.entity.QuestId;
+import com.guild.lootandlogistics.domain.entity.QuestStatus;
+import com.guild.lootandlogistics.domain.repository.DeliveryQuestRepository;
 import com.guild.lootandlogistics.domain.usecase.CreateDeliveryQuestUseCase;
 import com.guild.lootandlogistics.domain.usecase.FindAllDeliveryQuestsUseCase;
 import com.guild.lootandlogistics.domain.usecase.GetDeliveryQuestUseCase;
@@ -62,9 +65,18 @@ public class QuestsApiController implements QuestsApi {
 
     // GET /quests - listar encargos
     @Override
-    public ResponseEntity<List<DeliveryQuestResponseDTO>> findAllDeliveryQuests() {
+    public ResponseEntity<List<DeliveryQuestResponseDTO>> findAllDeliveryQuests(
+            String status,
+            String cargoName,
+            String currency) {
+        // Filtro, llegan como un texto desde la URL - si viene null no filtra
+        DeliveryQuestRepository.DeliveryQuestFilter filter = new DeliveryQuestRepository.DeliveryQuestFilter(
+                status == null ? null : QuestStatus.valueOf(status),
+                cargoName,
+                currency == null ? null : Currency.valueOf(currency));
+
         // Sin encargos devuelve 200 con lista vacía, no 404
-        List<DeliveryQuest> quests = findAllDeliveryQuestsUseCase.findAll();
+        List<DeliveryQuest> quests = findAllDeliveryQuestsUseCase.findAll(filter);
 
         return ResponseEntity.ok(mapper.toResponse(quests));
     }

@@ -131,7 +131,7 @@ class QuestsApiControllerTest {
     @Test
     @DisplayName("Lista los encargos y responde 200")
     void shouldReturnAllQuestsWith200() throws Exception {
-        when(findAllDeliveryQuestsUseCase.findAll()).thenReturn(List.of(quest));
+        when(findAllDeliveryQuestsUseCase.findAll(any())).thenReturn(List.of(quest));
 
         mockMvc.perform(get("/quests"))
                 .andExpect(status().isOk())
@@ -144,7 +144,7 @@ class QuestsApiControllerTest {
     @Test
     @DisplayName("Sin encargos responde 200 con lista vacía")
     void shouldReturnEmptyListWith200() throws Exception {
-        when(findAllDeliveryQuestsUseCase.findAll()).thenReturn(List.of());
+        when(findAllDeliveryQuestsUseCase.findAll(any())).thenReturn(List.of());
 
         mockMvc.perform(get("/quests"))
                 .andExpect(status().isOk())

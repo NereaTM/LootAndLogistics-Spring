@@ -24,7 +24,12 @@ public class FakeDeliveryQuestRepository implements DeliveryQuestRepository {
     }
 
     @Override
-    public List<DeliveryQuest> findAll() {
-        return new ArrayList<>(quests.values());
+    public List<DeliveryQuest> findAll(DeliveryQuestFilter filter) {
+        return quests.values().stream()
+                // criterio a null = no filtra - si viene, tiene que coincidir
+                .filter(quest -> filter.status() == null || quest.getStatus() == filter.status())
+                .filter(quest -> filter.cargoName() == null || quest.getCargo().name().equals(filter.cargoName()))
+                .filter(quest -> filter.currency() == null || quest.getReward().currency() == filter.currency())
+                .toList();
     }
 }

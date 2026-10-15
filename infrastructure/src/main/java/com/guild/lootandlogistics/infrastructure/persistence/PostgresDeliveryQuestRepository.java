@@ -36,10 +36,11 @@ public class PostgresDeliveryQuestRepository implements DeliveryQuestRepository 
     }
 
     @Override
-    public List<DeliveryQuest> findAll() {
-        return jpaRepository.findAll()
+    public List<DeliveryQuest> findAll(DeliveryQuestFilter filter) {
+        // el filtro se desmonta en sus tres campos para la consulta
+        return jpaRepository.findByFilter(filter.status(), filter.cargoName(), filter.currency())
                 .stream()
-                .map(entity -> mapper.toDomain(entity))
+                .map(entity -> mapper.toDomain(entity)) // fila de BD -> encargo del dominio
                 .toList();
     }
 }

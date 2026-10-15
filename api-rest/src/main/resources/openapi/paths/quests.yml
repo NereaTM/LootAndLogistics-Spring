@@ -3,7 +3,38 @@ get:
     - Quests
 
   operationId: findAllDeliveryQuests
-  summary: Lista todos los encargos del tablón del gremio
+  summary: Lista todos los encargos del tablón del gremio, con filtros opcionales
+
+  parameters:
+    - name: status
+      in: query
+      required: false
+      description: Estado del encargo
+      schema:
+        type: string
+        enum:
+          - AVAILABLE
+          - ACCEPTED
+          - IN_TRANSIT
+          - DELIVERED
+          - CANCELLED
+    - name: cargoName
+      in: query
+      required: false
+      description: Nombre exacto de la carga
+      schema:
+        type: string
+        example: Baba de caracol
+    - name: currency
+      in: query
+      required: false
+      description: Moneda de la recompensa
+      schema:
+        type: string
+        enum:
+          - GOLD
+          - SILVER
+          - COPPER
 
   responses:
     '200':

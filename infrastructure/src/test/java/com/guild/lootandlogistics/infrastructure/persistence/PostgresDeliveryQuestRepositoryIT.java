@@ -1,12 +1,7 @@
 package com.guild.lootandlogistics.infrastructure.persistence;
 
-import com.guild.lootandlogistics.domain.entity.Cargo;
-import com.guild.lootandlogistics.domain.entity.Currency;
-import com.guild.lootandlogistics.domain.entity.DangerLevel;
-import com.guild.lootandlogistics.domain.entity.DeliveryQuest;
-import com.guild.lootandlogistics.domain.entity.Location;
-import com.guild.lootandlogistics.domain.entity.Money;
-import com.guild.lootandlogistics.domain.entity.QuestId;
+import com.guild.lootandlogistics.domain.entity.*;
+import com.guild.lootandlogistics.domain.repository.DeliveryQuestRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,6 +35,10 @@ class PostgresDeliveryQuestRepositoryIT {
     private EntityManager entityManager;
 
     private PostgresDeliveryQuestRepository repository;
+
+    // Filtro con null: equivale al listado completo
+    private final DeliveryQuestRepository.DeliveryQuestFilter noFilter =
+            new DeliveryQuestRepository.DeliveryQuestFilter(null, null, null);
 
     @BeforeEach
     void setUp() {
@@ -89,7 +88,7 @@ class PostgresDeliveryQuestRepositoryIT {
         entityManager.flush();
         entityManager.clear();
 
-        List<DeliveryQuest> found = repository.findAll();
+        List<DeliveryQuest> found = repository.findAll(noFilter);
 
         assertThat(found)
                 .extracting(quest -> quest.getTitle())
@@ -97,9 +96,35 @@ class PostgresDeliveryQuestRepositoryIT {
     }
 
     @Test
+    @DisplayName("Con filtro, devuelve solo los encargos que cumplen todos los criterios")
+    void findAllReturnsOnlyMatchingQuests() {
+        Location origin = new Location(null, "Calle Mayor", "Valle Norte");
+        Location destination = new Location("Torre del Mago", "Camino Alto", "Montes Grises");
+
+        // cumple los tres criterios
+        repository.save(DeliveryQuest.create("Llevar pociones", origin, destination,
+                new Cargo("Pociones", 3), new Money(50, Currency.GOLD), DangerLevel.LOW));
+        // misma carga, pero pagado en plata
+        repository.save(DeliveryQuest.create("Pociones baratas", origin, destination,
+                new Cargo("Pociones", 3), new Money(50, Currency.SILVER), DangerLevel.LOW));
+        // pagado en oro, pero otra carga
+        repository.save(DeliveryQuest.create("Escoltar al bardo", origin, destination,
+                new Cargo("Laúd", 1), new Money(50, Currency.GOLD), DangerLevel.LOW));
+        entityManager.flush();
+        entityManager.clear();
+
+        List<DeliveryQuest> found = repository.findAll(
+                new DeliveryQuestRepository.DeliveryQuestFilter(QuestStatus.AVAILABLE, "Pociones", Currency.GOLD));
+
+        assertThat(found)
+                .extracting(quest -> quest.getTitle())
+                .containsExactly("Llevar pociones");
+    }
+
+    @Test
     @DisplayName("Si no hay encargos devuelve una lista vacía")
     void findAllReturnsEmptyListWhenNoQuests() {
-        List<DeliveryQuest> found = repository.findAll();
+        List<DeliveryQuest> found = repository.findAll(noFilter);
 
         assertThat(found).isEmpty();
     }

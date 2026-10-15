@@ -18,7 +18,7 @@ public class FindAllDeliveryQuestsUseCaseImpl implements FindAllDeliveryQuestsUs
     }
 
     @Override
-    public List<DeliveryQuest> findAll() {
-        return repository.findAll();
+    public List<DeliveryQuest> findAll(DeliveryQuestRepository.DeliveryQuestFilter filter) {
+        return repository.findAll(filter);
     }
 }
